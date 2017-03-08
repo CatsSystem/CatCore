@@ -59,6 +59,15 @@ class CacheLoader
         return false;
     }
 
+    public static function onPipeMessage($data)
+    {
+        $data = json_decode($data, true);
+        if( is_array($data) && $data['type'] == 'cache' )
+        {
+            CacheLoader::getInstance()->set($data['id'], $data['data']);
+        }
+    }
+
     /**
      * @var array(ILoader)
      */
