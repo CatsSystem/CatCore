@@ -1,0 +1,21 @@
+{
+    "name": "cat-sys/cat-core",
+    "description": "Cat Core Component",
+    "authors": [
+        {
+            "name": "lidanyang",
+            "email": "lancelot2014@foxmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7",
+        "ext-swoole": ">=1.8.8",
+        "ext-swoole_serialize": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "core\\":"src/"
+        }
+    }
+}
