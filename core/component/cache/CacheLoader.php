@@ -46,11 +46,9 @@ class CacheLoader
         if( Globals::isOpenCache() )
         {
             $process = new \swoole_process(function(\swoole_process $worker) use ($init_callback) {
-                $result = call_user_func($init_callback);
-                Globals::setProcessName($result['name']);
-                CacheLoader::getInstance()->init($result['path']);
+                $tick = call_user_func($init_callback);
                 CacheLoader::getInstance()->load(true);
-                swoole_timer_tick($result['tick'], function(){
+                swoole_timer_tick($tick, function(){
                     CacheLoader::getInstance()->load();
                 });
             }, false, false);
