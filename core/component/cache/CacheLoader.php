@@ -73,7 +73,7 @@ class CacheLoader
      */
     private $loaders = [];
 
-    public function init($cache_file_path)
+    public function init($cache_file_path, $namespace)
     {
         if( !file_exists($cache_file_path) )
         {
@@ -87,7 +87,7 @@ class CacheLoader
             }
             if (!$file->isDir()) {
                 $loader = substr($filename, 0, strpos($filename, '.'));
-                $class_name = str_replace('/','\\',$cache_file_path) . $loader;
+                $class_name = str_replace('/','\\',$namespace) . $loader;
                 $ob = new $class_name();
                 if( ! $ob instanceof ILoader ) {
                     continue;
