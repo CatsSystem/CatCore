@@ -6,10 +6,10 @@
  * Time: 10:21
  */
 
-namespace core\framework\log\adapter;
+namespace core\component\log\adapter;
 
 
-use core\framework\log\Logger;
+use core\component\log\Logger;
 
 class Debug extends Logger
 {

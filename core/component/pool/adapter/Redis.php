@@ -6,13 +6,13 @@
  * Time: 13:13
  */
 
-namespace core\framework\pool\adapter;
+namespace core\component\pool\adapter;
 
 use core\common\Constants;
 use core\common\Globals;
 use core\concurrent\Promise;
-use core\framework\pool\BasePool;
-use core\framework\client\Redis as Driver;
+use core\component\pool\BasePool;
+use core\component\client\Redis as Driver;
 
 class Redis extends BasePool
 {

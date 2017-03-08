@@ -6,7 +6,7 @@
  * Time: 12:57
  */
 
-namespace core\framework\task;
+namespace core\component\task;
 
 use core\common\Globals;
 use core\concurrent\Promise;

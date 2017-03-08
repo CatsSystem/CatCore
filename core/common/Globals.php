@@ -7,7 +7,7 @@
  */
 namespace core\common;
 
-use core\framework\config\Config;
+use core\component\config\Config;
 
 class Globals
 {

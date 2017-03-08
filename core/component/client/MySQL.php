@@ -6,13 +6,13 @@
  * Time: 10:52
  */
 
-namespace core\framework\client;
+namespace core\component\client;
 
 use core\common\Constants;
 use core\common\Error;
 use core\concurrent\Promise;
-use core\framework\log\Log;
-use core\framework\pool\BasePool;
+use core\component\log\Log;
+use core\component\pool\BasePool;
 
 class MySQL
 {

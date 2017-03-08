@@ -10,7 +10,7 @@
 namespace core\model;
 
 use core\concurrent\Promise;
-use core\framework\client\MySQL;
+use core\component\client\MySQL;
 
 class MySQLStatement extends DbQuery
 {

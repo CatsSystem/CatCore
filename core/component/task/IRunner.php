@@ -6,7 +6,7 @@
  * Time: 下午11:15
  */
 
-namespace core\framework\task;
+namespace core\component\task;
 
 use core\common\Error;
 

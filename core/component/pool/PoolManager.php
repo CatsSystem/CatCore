@@ -6,9 +6,9 @@
  * Time: 12:57
  */
 
-namespace core\framework\pool;
+namespace core\component\pool;
 
-use core\framework\config\Config;
+use core\component\config\Config;
 
 class PoolManager
 {

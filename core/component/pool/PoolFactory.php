@@ -5,7 +5,7 @@
  * Date: 17/3/3
  * Time: 17:31
  */
-namespace core\framework\pool;
+namespace core\component\pool;
 
 class PoolFactory
 {

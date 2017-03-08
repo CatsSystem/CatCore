@@ -5,7 +5,7 @@
  * Date: 16/12/2
  * Time: 下午9:53
  */
-namespace core\framework\cache;
+namespace core\component\cache;
 
 use core\common\Globals;
 use core\concurrent\Promise;

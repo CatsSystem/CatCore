@@ -6,9 +6,9 @@
  * Time: 上午10:07
  */
 
-namespace core\framework\log;
+namespace core\component\log;
 
-use core\framework\config\Config;
+use core\component\config\Config;
 
 class Log
 {

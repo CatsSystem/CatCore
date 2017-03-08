@@ -6,7 +6,7 @@
  * Time: 下午5:40
  */
 
-namespace core\framework\config;
+namespace core\component\config;
 
 class Config
 {

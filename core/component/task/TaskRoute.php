@@ -5,11 +5,11 @@
  * Date: 16/12/6
  * Time: 下午11:09
  */
-namespace core\framework\task;
+namespace core\component\task;
 
 use core\common\Globals;
 use core\concurrent\Promise;
-use core\framework\config\Config;
+use core\component\config\Config;
 
 class TaskRoute
 {

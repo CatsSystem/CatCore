@@ -6,7 +6,7 @@
  * Time: 11:51
  */
 
-namespace core\framework\client;
+namespace core\component\client;
 
 use core\common\Error;
 use core\concurrent\Promise;
@@ -14,7 +14,7 @@ use core\concurrent\Promise;
 /**
  * 同步Http客户端封装
  * Class CURL
- * @package core\framework\client
+ * @package core\component\client
  */
 class CURL
 {

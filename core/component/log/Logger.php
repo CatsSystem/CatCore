@@ -6,7 +6,7 @@
  * Time: 上午10:06
  */
 
-namespace core\framework\log;
+namespace core\component\log;
 
 abstract class Logger
 {

@@ -6,10 +6,10 @@
  * Time: 上午10:08
  */
 
-namespace core\framework\log\adapter;
+namespace core\component\log\adapter;
 
 
-use core\framework\log\Logger;
+use core\component\log\Logger;
 
 class File extends Logger
 {

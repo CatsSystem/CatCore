@@ -6,7 +6,7 @@
  * Time: 12:57
  */
 
-namespace core\framework\pool;
+namespace core\component\pool;
 
 abstract class BasePool
 {
