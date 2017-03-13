@@ -39,7 +39,7 @@ class Formater
 
                 if (!empty($traceItem['args'])) {
                     foreach ($traceItem['args'] as $argsItem) {
-                        $traceHash['args'][] = \var_export($argsItem, true);
+                        $traceHash['args'][] = $argsItem;
                     }
                 }
 
@@ -82,7 +82,7 @@ class Formater
 
                 if (!empty($traceItem['args'])) {
                     foreach ($traceItem['args'] as $argsItem) {
-                        $traceHash['args'][] = \var_export($argsItem, true);
+                        $traceHash['args'][] = $argsItem;
                     }
                 }
 
