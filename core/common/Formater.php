@@ -39,7 +39,7 @@ class Formater
 
                 if (!empty($traceItem['args'])) {
                     foreach ($traceItem['args'] as $argsItem) {
-                        $traceHash['args'][] = $argsItem;
+                        $traceHash['args'][] = is_object($argsItem) ? get_object_vars($argsItem) : $argsItem;
                     }
                 }
 
@@ -82,7 +82,7 @@ class Formater
 
                 if (!empty($traceItem['args'])) {
                     foreach ($traceItem['args'] as $argsItem) {
-                        $traceHash['args'][] = $argsItem;
+                        $traceHash['args'][] = is_object($argsItem) ? get_object_vars($argsItem) : $argsItem;
                     }
                 }
 
