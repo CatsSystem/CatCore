@@ -50,7 +50,12 @@ class Formater
         return $exceptionHash;
     }
 
-    public static function exception(\Exception $exception, $trace = true)
+    /**
+     * @param $exception \Exception | \Error
+     * @param bool $trace
+     * @return array
+     */
+    public static function exception($exception, $trace = true)
     {
         $exceptionHash = array(
             'className' => 'Exception',
