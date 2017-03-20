@@ -15,6 +15,10 @@ class Config
 
     public static function load($configPath = "")
     {
+        if(!empty($configPath))
+        {
+            self::$configPath = $configPath;
+        }
         $files = Config::tree($configPath, "/.php$/");
         $config = array();
         if (!empty($files)) {
@@ -23,7 +27,6 @@ class Config
             }
         }
         self::$config = $config;
-        self::$configPath = $configPath;
         return $config;
     }
 
