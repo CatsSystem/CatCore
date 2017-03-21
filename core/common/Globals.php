@@ -16,8 +16,6 @@ class Globals
      */
     static public $server;
 
-    public static $open_task = false;
-
     public static $open_cache = false;
 
     public static function isWorker()
@@ -31,8 +29,7 @@ class Globals
 
     public static function isOpenTask()
     {
-        return ( Config::getSubField('component', 'task', 'open_task', false)
-        && self::$open_task );
+        return Config::getSubField('component', 'task', 'open_task', false);
     }
 
     public static function isOpenCache()
