@@ -12,6 +12,10 @@ class DbQuery {
 	protected function get_in_str($arr)
 	{
 		$joinstr = "";
+		if( is_string($arr) )
+		{
+			return $arr;
+		}
 		foreach ($arr as $_v)
 		{
 			if ($joinstr) $joinstr.=",";
