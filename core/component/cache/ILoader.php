@@ -10,6 +10,11 @@ namespace core\component\cache;
 use core\common\Globals;
 use core\concurrent\Promise;
 
+/**
+ * 缓存加载器基类
+ * Class ILoader
+ * @package core\component\cache
+ */
 abstract class ILoader
 {
     protected $id;

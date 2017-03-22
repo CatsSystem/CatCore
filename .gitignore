@@ -4,4 +4,4 @@ composer.lock
 .DS_Store
 *.pid
 tests/
-test.php
+doc/

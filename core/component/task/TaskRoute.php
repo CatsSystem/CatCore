@@ -16,7 +16,7 @@ class TaskRoute
     public static function route($task_path, $data)
     {
         try {
-            $data = swoole_unpack($data);
+            $data = \swoole_serialize::unpack($data);
             $action = $task_path . $data['task'];
             $action = str_replace('/','\\',$action);
             if (!\class_exists($action)) {
@@ -33,7 +33,7 @@ class TaskRoute
                 }
 
                 $result = call_user_func_array([$class,$method], $data['params']);
-                return swoole_pack($result);
+                return \swoole_serialize::pack($result);
             }
         }catch (\Exception $e) {
             $result = var_export($e);

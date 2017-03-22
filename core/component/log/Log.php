@@ -37,6 +37,9 @@ class Log
         $this->logger = new $class_name($config);
     }
 
+    /**
+     * @return Logger
+     */
     public function getLogger()
     {
         return $this->logger;

@@ -10,6 +10,7 @@ namespace core\component\client;
 
 use core\common\Constants;
 use core\common\Error;
+use core\component\log\Log;
 use core\concurrent\Promise;
 use core\component\pool\BasePool;
 
@@ -92,6 +93,7 @@ class Redis
                 $this->db = new \swoole_redis();
 
                 $this->db->on("close", function(){
+                    Log::INFO('MySQL', "Close connection {$this->id}");
                     $this->connect($this->id);
                 });
                 $timeId = swoole_timer_after($timeout, function() use ($promise){
@@ -139,22 +141,27 @@ class Redis
             case Constants::MODE_SYNC:
             {
                 $this->link = new \Redis();
-                $result = $this->link->connect($this->config['host'], $this->config['port'], $timeout);
-                if( !$result ) {
+                try {
+                    $result = $this->link->connect($this->config['host'], $this->config['port'], $timeout);
+                    if( !$result ) {
+                        $promise->resolve([
+                            'code'      => Error::ERR_REDIS_CONNECT_FAILED,
+                            'errCode'   => -1,
+                            'errMsg'    => $this->link->getLastError(),
+                        ]);
+                    }
+                    if( isset($this->config['pwd']) ) {
+                        $this->link->auth($this->config['pwd']);
+                    }
+                    $this->link->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_NONE);
+                    $this->link->select($this->config['select']);
                     $promise->resolve([
-                        'code'      => Error::ERR_REDIS_CONNECT_FAILED,
-                        'errCode'   => -1,
-                        'errMsg'    => $this->link->getLastError(),
+                        'code'  => Error::SUCCESS
                     ]);
+                }catch (\RedisException $e) {
+
                 }
-                if( isset($this->config['pwd']) ) {
-                    $this->link->auth($this->config['pwd']);
-                }
-                $this->link->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_NONE);
-                $this->link->select($this->config['select']);
-                $promise->resolve([
-                    'code'  => Error::SUCCESS
-                ]);
+
                 break;
             }
         }

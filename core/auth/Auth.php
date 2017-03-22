@@ -13,6 +13,11 @@ use core\common\Error;
 use core\common\Globals;
 use core\component\client\Redis;
 
+/**
+ * 鉴权类
+ * Class Auth
+ * @package core\auth
+ */
 class Auth
 {
     private static $instance = null;
@@ -44,6 +49,12 @@ class Auth
      */
     private $prefix;
 
+    /**
+     * 初始化鉴权类
+     * @param $prefix       string      存储使用的key前缀
+     * @param $config       string      Redis配置, 用于存储生成的access key
+     * @return \Generator
+     */
     public function init($prefix, $config)
     {
         $this->prefix = $prefix;
@@ -54,8 +65,8 @@ class Auth
 
     /**
      * 获取AccessToken
-     * @param $uuid     string
-     * @param $secret   string
+     * @param $uuid     string      标示ID
+     * @param $secret   string      秘钥
      * @param $expire   int         超时时间, 单位s
      * @return string access_token
      */
@@ -74,12 +85,17 @@ class Auth
         return null;
     }
 
-
+    /**
+     * 检查AccessToken
+     * @param $uuid         string      标示ID
+     * @param $token        string      access token
+     * @return bool                     是否检测成功
+     */
     public function checkAccessToken($uuid, $token)
     {
         $result = yield $this->redis->get($this->prefix . $uuid);
         if($result['code'] != Error::SUCCESS) {
-            return null;
+            return false;
         }
         return $result['data'] === $token;
     }

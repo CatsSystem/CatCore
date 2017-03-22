@@ -10,8 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7",
-        "ext-swoole": ">=1.8.8",
-        "ext-swoole_serialize": ">=0.1.1"
+        "ext-swoole": ">=1.9.6"
     },
     "autoload": {
         "psr-4": {

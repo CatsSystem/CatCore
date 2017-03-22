@@ -10,9 +10,9 @@ namespace core\component\pool;
 class PoolFactory
 {
     /**
-     * @param $config
-     * @return BasePool
-     * @throws \Exception
+     * 根据指定的配置数据创建一个连接池实例
+     * @param $config   array   配置数据, 键值对存储
+     * @return BasePool | null  创建好的连接池, 连接池类型不存在返回null
      */
     public static function getInstance($config)
     {
@@ -26,7 +26,7 @@ class PoolFactory
 
         if( !class_exists($class_name) )
         {
-            throw new \Exception("no class {$class_name}");
+            return null;
         }
         return new $class_name($config);
     }

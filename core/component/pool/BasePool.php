@@ -57,11 +57,15 @@ abstract class BasePool
     abstract public function init();
 
     /**
+     * 创建一个新的连接
      * @param $id
      * @return mixed
      */
     abstract protected function new_item($id);
+
+
     /**
+     * 获取连接池名称
      * @return string
      */
     public function getName()

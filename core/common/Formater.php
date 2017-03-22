@@ -6,8 +6,19 @@
 
 namespace core\common;
 
+/**
+ * 格式化工具
+ * Class Formater
+ * @package core\common
+ */
 class Formater
 {
+    /**
+     * 格式化Fatal错误
+     * @param $error            array   错误信息
+     * @param bool $trace       bool    是否打印trace信息
+     * @return array                    格式化后的结果
+     */
     public static function fatal($error, $trace=true)
     {
         $exceptionHash = array(
@@ -51,9 +62,10 @@ class Formater
     }
 
     /**
-     * @param $exception \Exception | \Error
-     * @param bool $trace
-     * @return array
+     * 格式化异常
+     * @param $exception \Exception | \Error        异常对象
+     * @param bool $trace                           是否打印trace信息
+     * @return array                                格式化后的结果
      */
     public static function exception($exception, $trace = true)
     {

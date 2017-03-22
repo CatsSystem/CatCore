@@ -30,13 +30,13 @@ class AsyncTask
             $promise->resolve(false);
             return $promise;
         }
-        $data = swoole_pack([
+        $data = \swoole_serialize::pack([
             'task'    => $this->name,
             'method'  => $name,
             'params'  => $arguments
         ]);
         Globals::$server->task($data, -1, function(\swoole_server $serv, $task_id, $data) use ($promise) {
-            $promise->resolve(swoole_unpack($data));
+            $promise->resolve(\swoole_serialize::unpack($data));
         });
         return $promise;
     }

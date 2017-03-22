@@ -8,6 +8,11 @@
 
 namespace core\auth;
 
+/**
+ * AccessToken生成类
+ * Class AccessToken
+ * @package core\auth
+ */
 class AccessToken
 {
     private static function safe_base64encode($string)
@@ -17,6 +22,12 @@ class AccessToken
         return $data;
     }
 
+    /**
+     * 生成access token
+     * @param $accessKey        string      公钥
+     * @param $secretKey        string      私钥
+     * @return string                       生成好的access token
+     */
     public static function get_access_token($accessKey, $secretKey)
     {
         $json = json_encode(array(
