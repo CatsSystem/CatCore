@@ -15,7 +15,7 @@
     "autoload": {
         "psr-4": {
             "core\\":"core/",
-            "Aura\\SqlQuery":"lib/Aura/SqlQuery"
+            "Aura\\SqlQuery\\":"lib/Aura/SqlQuery"
         }
     }
 }
