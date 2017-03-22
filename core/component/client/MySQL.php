@@ -14,6 +14,11 @@ use core\concurrent\Promise;
 use core\component\log\Log;
 use core\component\pool\BasePool;
 
+/**
+ * MySQL连接对象的封装
+ * Class MySQL
+ * @package core\component\client
+ */
 class MySQL
 {
     /**
@@ -58,6 +63,11 @@ class MySQL
      */
     private $open_log = false;
 
+    /**
+     * MySQL constructor.
+     * @param $config       array       配置选项
+     * @param $mode         int         模式(<b>Constants</b>中的<b>MODE</b>常量)
+     */
     public function __construct($config, $mode = Constants::MODE_ASYNC)
     {
         $this->config   = $config;
@@ -65,11 +75,21 @@ class MySQL
         $this->open_log = $config['open_log'] ?? false;
     }
 
+    /**
+     * 设置所属的连接池
+     * @param $pool     BasePool    连接池对象
+     */
     public function addPool($pool)
     {
         $this->pool = $pool;
     }
 
+    /**
+     * 建立数据库连接
+     * @param $id           int     连接ID
+     * @param $timeout      int     超时时间, 单位ms
+     * @return Promise              Promise对象
+     */
     public function connect($id, $timeout=3000)
     {
         $this->id = $id;
@@ -120,6 +140,9 @@ class MySQL
         return $promise;
     }
 
+    /**
+     * 关闭数据库连接
+     */
     public function close()
     {
         switch ($this->mode)
@@ -147,6 +170,13 @@ class MySQL
         }
     }
 
+    /**
+     * 执行SQL请求
+     * @param $sql          string      SQL语句
+     * @param $get_one      bool        查询1条记录
+     * @param $timeout      int         超时时间, 单位ms
+     * @return Promise                  Promise对象
+     */
     public function execute($sql, $get_one, $timeout=3000)
     {
         $promise = new Promise();

@@ -14,42 +14,64 @@ use core\component\log\Log;
 use core\concurrent\Promise;
 use core\component\pool\BasePool;
 
+/**
+ * Redis连接对象的封装
+ * Class Redis
+ * @package core\component\client
+ */
 class Redis
 {
-
+    /**
+     * 连接ID
+     * @var int
+     */
     public $id;
 
     /**
+     * swoole_redis连接对象
      * @var \swoole_redis
      */
     private $db;
 
     /**
+     * 超时时间
      * @var int
      */
     private $timeout = 3000;
 
     /**
+     * 所属连接池
      * @var BasePool
      */
     private $pool;
 
     /**
+     * 同步异步模式
      * @var int
      */
     private $mode;
 
     /**
+     * 同步Redis连接对象
      * @var \Redis
      */
     private $link;
 
+    /**
+     * Redis constructor.
+     * @param $config       array       配置选项
+     * @param $mode         int         模式(<b>Constants</b>中的<b>MODE</b>常量)
+     */
     public function __construct($config,  $mode = Constants::MODE_ASYNC)
     {
         $this->config = $config;
         $this->mode = $mode;
     }
 
+    /**
+     * 设置所属的连接池
+     * @param $pool     BasePool    连接池对象
+     */
     public function addPool($pool)
     {
         $this->pool = $pool;
@@ -63,6 +85,9 @@ class Redis
         }
     }
 
+    /**
+     * 关闭Redis连接
+     */
     public function close()
     {
         switch ($this->mode)
@@ -82,6 +107,12 @@ class Redis
         }
     }
 
+    /**
+     * 建立Redis连接
+     * @param $id           int     连接ID
+     * @param $timeout      int     超时时间, 单位ms
+     * @return Promise              Promise对象
+     */
     public function connect($id, $timeout = 3000)
     {
         $this->id = $id;
@@ -159,7 +190,11 @@ class Redis
                         'code'  => Error::SUCCESS
                     ]);
                 }catch (\RedisException $e) {
-
+                    $promise->resolve([
+                        'code'      => Error::ERR_REDIS_CONNECT_FAILED,
+                        'errCode'   => $e->getCode(),
+                        'errMsg'    => $e->getMessage(),
+                    ]);
                 }
 
                 break;
@@ -169,6 +204,12 @@ class Redis
         return $promise;
     }
 
+    /**
+     * 调用Redis命令
+     * @param $name         string      Redis命令
+     * @param $arguments    array       Redis命令参数列表
+     * @return Promise                  Promise对象
+     */
     public function __call($name, $arguments)
     {
         $promise = new Promise();
@@ -218,8 +259,9 @@ class Redis
     }
 
     /**
-     * @param mixed $timeout
-     * @return Redis
+     * 设置超时时间
+     * @param $timeout     int      超时时间，单位ms
+     * @return Redis                返回当前对象
      */
     public function setTimeout($timeout)
     {
