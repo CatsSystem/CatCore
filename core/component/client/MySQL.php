@@ -102,7 +102,8 @@ class MySQL
                 $this->db = new \swoole_mysql();
                 $this->db->on('Close', function($db){
                     Log::INFO('MySQL', "Close connection {$this->id}" );
-                    $this->close();
+                    unset($this->db);
+                    $this->inPool(true);
                 });
                 $timeId = swoole_timer_after($timeout, function() use ($promise){
                     $this->close();
