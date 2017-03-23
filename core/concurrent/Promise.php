@@ -336,7 +336,7 @@ class Promise
                 else {
                     if (method_exists($generator, "getReturn")) {
                         $ret = $generator->getReturn();
-                        $future->resolve(($ret === null) ? $value : $ret);
+                        $future->resolve($ret);
                     }
                     else {
                         $future->resolve($value);
