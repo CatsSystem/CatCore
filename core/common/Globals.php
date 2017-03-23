@@ -32,7 +32,7 @@ class Globals
      */
     public static function isWorker()
     {
-        if( empty(Globals::$server) )
+        if( empty(Globals::$server) || !isset(Globals::$server->taskworker) )
         {
             return true;
         }
