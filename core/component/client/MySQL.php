@@ -64,6 +64,12 @@ class MySQL
     private $open_log = false;
 
     /**
+     * 是否已经关闭连接
+     * @var bool
+     */
+    private $close = true;
+
+    /**
      * MySQL constructor.
      * @param $config       array       配置选项
      * @param $mode         int         模式(<b>Constants</b>中的<b>MODE</b>常量)
@@ -102,6 +108,7 @@ class MySQL
                 $this->db = new \swoole_mysql();
                 $this->db->on('Close', function($db){
                     Log::INFO('MySQL', "Close connection {$this->id}" );
+                    $this->close = true;
                     unset($this->db);
                     $this->inPool(true);
                 });
@@ -116,6 +123,7 @@ class MySQL
                         $promise->reject(Error::ERR_MYSQL_CONNECT_FAILED);
                         return;
                     }
+                    $this->close = false;
                     $promise->resolve(Error::SUCCESS);
                 });
                 break;
@@ -133,6 +141,7 @@ class MySQL
                     Log::ERROR('MySQL' , sprintf("Connect MySQL Failed [%d]: %s", $this->link->connect_errno, $this->link->connect_error));
                     $promise->reject(Error::ERR_MYSQL_CONNECT_FAILED);
                 }
+                $this->close = false;
                 $promise->resolve(Error::SUCCESS);
                 break;
             }
@@ -146,6 +155,7 @@ class MySQL
      */
     public function close()
     {
+        $this->close = true;
         switch ($this->mode)
         {
             case Constants::MODE_ASYNC:
@@ -266,5 +276,13 @@ class MySQL
         }
 
         return $promise;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isClose()
+    {
+        return $this->close;
     }
 }

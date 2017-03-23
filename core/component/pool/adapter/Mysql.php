@@ -52,13 +52,19 @@ class Mysql extends BasePool
     {
         if(Globals::isWorker())
         {
-            if( $this->idle_queue->isEmpty() )
+            while( !$this->idle_queue->isEmpty() )
             {
-                $promise = new Promise();
-                $this->waiting_tasks->enqueue($promise);
-                return $promise;
+                $driver = $this->idle_queue->dequeue();
+                if( $driver->isClose() )
+                {
+                    continue;
+                }
+                return $driver;
             }
-            return $this->idle_queue->dequeue();
+
+            $promise = new Promise();
+            $this->waiting_tasks->enqueue($promise);
+            return $promise;
         }
         else
         {
