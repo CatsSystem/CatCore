@@ -46,11 +46,12 @@ class Redis extends BasePool
 
     /**
      * 弹出一个空闲item
+     * @param bool $force_sync      强制使用同步模式
      * @return mixed
      */
-    public function pop()
+    public function pop($force_sync = false)
     {
-        if(Globals::isWorker())
+        if(Globals::isWorker() && !$force_sync)
         {
             if( $this->idle_queue->isEmpty() )
             {
