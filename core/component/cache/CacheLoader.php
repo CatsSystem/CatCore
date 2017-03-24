@@ -117,22 +117,21 @@ class CacheLoader
      */
     public function load($force=false)
     {
-        foreach ($this->loaders as $loader)
-        {
-            if( $force || $loader->refresh() ) {
-                $promise = new Promise();
-                $promise->then(function($value) use ($loader){
-                    if( $value['code'] == Error::SUCCESS )
-                    {
-                        $loader->broadcast($value['data']);
-                    }
-                });
-                Promise::co(function() use ($loader, &$promise){
-                    $loader->load($promise);
-                });
-
+        Promise::co(function() use ($force){
+            foreach ($this->loaders as $loader)
+            {
+                if( $force || $loader->refresh() ) {
+                    $promise = new Promise();
+                    $promise->then(function($value) use ($loader){
+                        if( $value['code'] == Error::SUCCESS )
+                        {
+                            $loader->broadcast($value['data']);
+                        }
+                    });
+                    yield $loader->load($promise);
+                }
             }
-        }
+        });
     }
 
     /**

@@ -32,6 +32,7 @@ class Error
 
     const ERR_TASK_NOT_FOUND                         = -30;             // 异步Task不存在
 
+    const ERR_CACHE_LOAD_FAILED                      = -35;             // 加载内存缓存失败
 
     const ERR_END                                    = -99;             // 末尾错误码, 无意义
 }

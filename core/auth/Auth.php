@@ -52,15 +52,13 @@ class Auth
     /**
      * 初始化鉴权类
      * @param $prefix       string      存储使用的key前缀
-     * @param $config       string      Redis配置, 用于存储生成的access key
+     * @param $redis        Redis      Redis配置, 用于存储生成的access key
      * @return \Generator
      */
-    public function init($prefix, $config)
+    public function init($prefix, $redis)
     {
         $this->prefix = $prefix;
-        $this->redis = new Redis($config,
-            Globals::isWorker() ? Constants::MODE_ASYNC : Constants::MODE_SYNC);
-        return yield $this->redis->connect(0);
+        $this->redis = $redis;
     }
 
     /**

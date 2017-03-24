@@ -33,8 +33,7 @@ class Mysql extends BasePool
 
     public function init()
     {
-        if(Globals::isWorker())
-        {
+        if(Globals::isWorker()) {
             for($i = 0; $i < $this->size; $i ++)
             {
                 $this->new_item($i + 1);
@@ -46,19 +45,26 @@ class Mysql extends BasePool
 
     /**
      * 弹出一个空闲item
+     * @param bool $force_sync      强制使用同步模式
      * @return mixed
      */
-    public function pop()
+    public function pop($force_sync = false)
     {
-        if(Globals::isWorker())
+        if(Globals::isWorker() && !$force_sync)
         {
-            if( $this->idle_queue->isEmpty() )
+            while( !$this->idle_queue->isEmpty() )
             {
-                $promise = new Promise();
-                $this->waiting_tasks->enqueue($promise);
-                return $promise;
+                $driver = $this->idle_queue->dequeue();
+                if( $driver->isClose() )
+                {
+                    continue;
+                }
+                return $driver;
             }
-            return $this->idle_queue->dequeue();
+
+            $promise = new Promise();
+            $this->waiting_tasks->enqueue($promise);
+            return $promise;
         }
         else
         {

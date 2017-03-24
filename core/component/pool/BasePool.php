@@ -40,9 +40,10 @@ abstract class BasePool
 
     /**
      * 弹出一个空闲item
+     * @param bool $force_sync  强制使用同步模式
      * @return mixed
      */
-    abstract public function pop();
+    abstract public function pop($force_sync = false);
 
     /**
      * 归还一个item
