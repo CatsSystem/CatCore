@@ -102,6 +102,10 @@ class Mysql extends BasePool
             return;
         }
         $this->idle_queue->enqueue($item);
+        if( $this->waiting_tasks->count() > 0 )
+        {
+            $this->doTask();
+        }
         return;
     }
 }
