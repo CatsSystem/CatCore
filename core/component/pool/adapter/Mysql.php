@@ -110,4 +110,9 @@ class Mysql extends BasePool
         $this->idle_queue->enqueue($item);
         return;
     }
+
+    public function escape($value)
+    {
+        return $this->sync->escape($value);
+    }
 }

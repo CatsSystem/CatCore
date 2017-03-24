@@ -23,12 +23,20 @@ class Db
      */
     private static $factory = null;
 
-    protected static function init()
+
+
+    public static function table($table)
     {
         if( empty(self::$factory) )
         {
             self::$factory = new QueryFactory('mysql');
         }
+
+    }
+
+    public function __construct($table)
+    {
+        $this->table = $table;
     }
 
     public static function select()
@@ -49,6 +57,11 @@ class Db
     public static function delete()
     {
         return self::$factory->newDelete();
+    }
+
+    public function __call($name, $arguments)
+    {
+
     }
 
     /**

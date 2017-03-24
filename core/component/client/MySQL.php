@@ -278,6 +278,20 @@ class MySQL
         return $promise;
     }
 
+    public function escape($value)
+    {
+        switch ($this->mode) {
+            case Constants::MODE_ASYNC: {
+                return $this->db->escape($value);
+            }
+            case Constants::MODE_SYNC: {
+                return $this->link->escape_string($value);
+            }
+            default:
+                return $value;
+        }
+    }
+
     /**
      * @return boolean
      */
