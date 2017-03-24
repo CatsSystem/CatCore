@@ -38,10 +38,9 @@ class Mysql extends BasePool
             {
                 $this->new_item($i + 1);
             }
-        } else {
-            $this->sync = new Driver($this->config['args'], Constants::MODE_SYNC);
-            $this->sync->connect(0);
         }
+        $this->sync = new Driver($this->config['args'], Constants::MODE_SYNC);
+        $this->sync->connect(0);
     }
 
     /**
@@ -110,10 +109,5 @@ class Mysql extends BasePool
         }
         $this->idle_queue->enqueue($item);
         return;
-    }
-
-    public function escape($value)
-    {
-        return $this->sync->escape($value);
     }
 }

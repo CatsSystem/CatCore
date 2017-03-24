@@ -8,7 +8,8 @@
 
 namespace core\model;
 
-use core\component\pool\adapter\Mysql;
+use core\component\client\MySQL;
+
 class Statement
 {
 
@@ -17,7 +18,7 @@ class Statement
     /**
      * @var Mysql
      */
-    private static $pool;
+    private static $client;
 
     /**
      * @param $sql
@@ -32,11 +33,11 @@ class Statement
     }
 
     /**
-     * @param $pool Mysql
+     * @param $client Mysql
      */
-    public static function init(Mysql $pool)
+    public static function init($client)
     {
-        self::$pool = $pool;
+        self::$client = $client;
     }
 
     /**
@@ -56,7 +57,7 @@ class Statement
         foreach ($values as $key => $value)
         {
             $patterns[]     = "/$key/";
-            $replacements[] = is_numeric($value) ? $value : "'" . self::$pool->escape($value) . "'";
+            $replacements[] = is_numeric($value) ? $value : "'" . self::$client->escape($value) . "'";
         }
         ksort($patterns);
         ksort($replacements);
