@@ -57,10 +57,26 @@ class Statement
         foreach ($values as $key => $value)
         {
             $patterns[]     = "/:$key/";
-            $replacements[] = is_numeric($value) ? $value : "'" . self::$client->escape($value) . "'";
+
+            if( is_numeric($value) ) {
+                $replacements[] = $value;
+            } else if(is_array($value)) {
+                $str = "";
+                foreach ($value as $v)
+                {
+                    if ($str) $str.=",";
+                    $str.="'".addslashes($v)."'";
+                }
+                $replacements[] = $str;
+            } else {
+                $replacements[] = "'" . self::$client->escape($value) . "'";
+            }
+
         }
         ksort($patterns);
         ksort($replacements);
+        var_dump($patterns);
+        var_dump($replacements);
         return preg_replace($patterns, $replacements, $this->sql);
     }
 
