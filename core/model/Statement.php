@@ -56,7 +56,7 @@ class Statement
         $replacements = [];
         foreach ($values as $key => $value)
         {
-            $patterns[]     = "/$key/";
+            $patterns[]     = "/:$key/";
             $replacements[] = is_numeric($value) ? $value : "'" . self::$client->escape($value) . "'";
         }
         ksort($patterns);
