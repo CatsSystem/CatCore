@@ -75,8 +75,6 @@ class Statement
         }
         ksort($patterns);
         ksort($replacements);
-        var_dump($patterns);
-        var_dump($replacements);
         return preg_replace($patterns, $replacements, $this->sql);
     }
 
