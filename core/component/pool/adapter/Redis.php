@@ -37,7 +37,7 @@ class Redis extends BasePool
         {
             for($i = 0; $i < $this->size; $i ++)
             {
-                $this->new_item($i + 1);
+                $this->newItem($i + 1);
             }
         }
         $this->sync = new Driver($this->config['args'], Constants::MODE_SYNC);
@@ -78,7 +78,7 @@ class Redis extends BasePool
     {
         if($close)
         {
-            $this->new_item($item->id);
+            $this->newItem($item->id);
             unset($item);
             return;
         }
@@ -86,7 +86,7 @@ class Redis extends BasePool
         return;
     }
 
-    protected function new_item($id)
+    protected function newItem($id)
     {
         $driver = new Driver($this->config['args']);
         $driver->addPool($this);
@@ -97,7 +97,7 @@ class Redis extends BasePool
                 $this->doTask();
             }
         }, function() use ($id){
-            $this->new_item($id);
+            $this->newItem($id);
         });
     }
 

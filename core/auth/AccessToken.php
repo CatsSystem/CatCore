@@ -28,7 +28,7 @@ class AccessToken
      * @param $secretKey        string      私钥
      * @return string                       生成好的access token
      */
-    public static function get_access_token($accessKey, $secretKey)
+    public static function getAccessToken($accessKey, $secretKey)
     {
         $json = json_encode(array(
             'accessKey'  => $accessKey,

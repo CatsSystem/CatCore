@@ -62,7 +62,7 @@ abstract class BasePool
      * @param $id
      * @return mixed
      */
-    abstract protected function new_item($id);
+    abstract protected function newItem($id);
 
 
     /**

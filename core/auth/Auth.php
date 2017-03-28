@@ -8,9 +8,7 @@
 
 namespace core\auth;
 
-use core\common\Constants;
 use core\common\Error;
-use core\common\Globals;
 use core\component\client\Redis;
 
 /**
@@ -70,7 +68,7 @@ class Auth
      */
     public function grantAccessToken($uuid, $secret, $expire)
     {
-        $access_token = AccessToken::get_access_token($uuid, $secret);
+        $access_token = AccessToken::getAccessToken($uuid, $secret);
         if(empty($this->redis))
         {
             return null;

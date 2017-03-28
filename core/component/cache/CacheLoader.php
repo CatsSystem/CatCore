@@ -43,7 +43,7 @@ class CacheLoader
      * @param $init_callback  callable   回调函数,用于初始化内存缓存进程
      * @return bool|\swoole_process         开启成功返回进程对象, 否则返回false
      */
-    public static function open_cache_process($init_callback)
+    public static function openCacheProcess($init_callback)
     {
         if( !is_callable($init_callback) )
         {
