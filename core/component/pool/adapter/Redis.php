@@ -60,7 +60,6 @@ class Redis extends BasePool
                 return $promise;
             }
             $driver = $this->idle_queue->dequeue();
-            $this->idle_queue->enqueue($driver);
             return $driver;
         }
         else
@@ -83,6 +82,10 @@ class Redis extends BasePool
             return;
         }
         $this->idle_queue->enqueue($item);
+        if( $this->waiting_tasks->count() > 0 )
+        {
+            $this->doTask();
+        }
         return;
     }
 

@@ -222,6 +222,7 @@ class Redis
         {
             case Constants::MODE_ASYNC:
             {
+                $this->inPool();
                 $index = count($arguments);
                 $timeId = swoole_timer_after($this->timeout, function() use ($promise){
                     $this->close();
