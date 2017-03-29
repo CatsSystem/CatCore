@@ -250,7 +250,18 @@ class Redis
             }
             case Constants::MODE_SYNC:
             {
-                call_user_func_array([$this->link, $name], $arguments);
+                $result = call_user_func_array([$this->link, $name], $arguments);
+                if( $result === false )
+                {
+                    $promise->resolve([
+                        'code'      => Error::ERR_REDIS_ERROR
+                    ]);
+                    break;
+                }
+                $promise->resolve([
+                    'code'  => Error::SUCCESS,
+                    'data'  => $result
+                ]);
                 break;
             }
         }
