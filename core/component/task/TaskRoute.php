@@ -32,7 +32,7 @@ class TaskRoute
                     throw new \Exception("method error");
                 }
 
-                $result = call_user_func_array([$class,$method], $data['params']);
+                $result = yield call_user_func_array([$class,$method], $data['params']);
                 return \swoole_serialize::pack($result);
             }
         }catch (\Exception $e) {
@@ -48,7 +48,7 @@ class TaskRoute
     public static function onTask($task_path, $data)
     {
         Promise::co(function () use ($task_path, $data) {
-            $result = TaskRoute::route($task_path, $data);
+            $result = yield TaskRoute::route($task_path, $data);
             if(Globals::$server)
             {
                 Globals::$server->finish($result);
