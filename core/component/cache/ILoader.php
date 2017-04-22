@@ -25,6 +25,8 @@ abstract class ILoader
 
     protected $count;
 
+    protected $sendTask = false;
+
     public function __construct()
     {
         $this->init();
@@ -33,6 +35,10 @@ abstract class ILoader
     public function broadcast($data)
     {
         $worker_num = Globals::$server->setting['worker_num'] - 1;
+        if($this->sendTask)
+        {
+            $worker_num += Globals::$server->setting['task_worker_num'];
+        }
         while( $worker_num >= 0 )
         {
             Globals::$server->sendMessage(json_encode([
