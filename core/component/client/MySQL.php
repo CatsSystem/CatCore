@@ -140,7 +140,9 @@ class MySQL
                 if ($this->link->connect_error) {
                     Log::ERROR('MySQL' , sprintf("Connect MySQL Failed [%d]: %s", $this->link->connect_errno, $this->link->connect_error));
                     $promise->reject(Error::ERR_MYSQL_CONNECT_FAILED);
+                    break;
                 }
+                $this->link->set_charset($this->config['charset'] ?? 'utf8');
                 $this->close = false;
                 $promise->resolve(Error::SUCCESS);
                 break;
