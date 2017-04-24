@@ -19,7 +19,7 @@ class Config
         {
             self::$configPath = $configPath;
         }
-        $files = Config::tree($configPath, "/.php$/");
+        $files = Config::tree(self::$configPath, "/.php$/");
         $config = array();
         if (!empty($files)) {
             foreach ($files as $file) {

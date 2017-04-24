@@ -189,9 +189,6 @@ class Http
 
     public function __call($name, $arguments)
     {
-        if($name == 'get' || $name == 'post' || $name == 'execute' ) {
-            return false;
-        }
         return call_user_func_array([$this->http_client, $name], $arguments);
     }
 }
