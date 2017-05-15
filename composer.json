@@ -7,10 +7,9 @@
             "email": "lancelot2014@foxmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=7",
-        "ext-swoole": ">=1.9.8"
+        "ext-swoole": ">=1.9.9"
     },
     "autoload": {
         "psr-4": {

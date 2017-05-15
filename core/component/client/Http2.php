@@ -52,6 +52,8 @@ class Http2
      */
     public $error;
 
+    private $closed = true;
+
     /**
      * Http constructor.
      * @param string $domain 域名(不带http前缀)或者IP
@@ -90,12 +92,16 @@ class Http2
                 $this->http_client = new \swoole_http2_client($this->domain, $this->port, $this->is_ssl);
                 $promise->resolve(Error::SUCCESS);
             });
-            return $promise;
+
         } else {
             $this->http_client = new \swoole_http2_client($this->domain, $this->port, $this->is_ssl);
             $promise->resolve(Error::SUCCESS);
-            return $promise;
         }
+        $this->closed = false;
+        $this->http_client->on("Close", function(){
+            $this->closed = true;
+        });
+        return $promise;
     }
 
     /**
@@ -106,6 +112,13 @@ class Http2
     public function get($path, $timeout = 3000)
     {
         $promise = new Promise();
+        if($this->closed)
+        {
+            $promise->resolve([
+                'code'  => Error::ERR_HTTP_CONN_CLOSE
+            ]);
+            return $promise;
+        }
         $timeId = swoole_timer_after($timeout, function() use ($promise){
             $this->http_client->close();
             $promise->resolve([
@@ -133,6 +146,13 @@ class Http2
     public function post($path, $data, $timeout = 3000)
     {
         $promise = new Promise();
+        if($this->closed)
+        {
+            $promise->resolve([
+                'code'  => Error::ERR_HTTP_CONN_CLOSE
+            ]);
+            return $promise;
+        }
         $timeId = swoole_timer_after($timeout, function() use ($promise){
             $this->http_client->close();
             $promise->resolve([
@@ -150,6 +170,34 @@ class Http2
             ]);
         });
         return $promise;
+    }
+
+    public function openStream($path, $callback)
+    {
+        if($this->closed)
+        {
+            return Error::ERR_HTTP_CONN_CLOSE;
+        }
+        return $this->http_client->openStream($path, $callback);
+    }
+
+    public function push($stream_id, $data)
+    {
+        if($this->closed)
+        {
+            return Error::ERR_HTTP_CONN_CLOSE;
+        }
+        $this->http_client->push($stream_id, $data);
+        return Error::SUCCESS;
+    }
+
+    public function closeStream($stream_id)
+    {
+        if($this->closed)
+        {
+            return;
+        }
+        $this->http_client->closeStream($stream_id);
     }
 
     public function cookie()

@@ -8,7 +8,7 @@
 
 namespace core\component\log\adapter;
 
-
+use core\common\Globals;
 use core\component\log\Logger;
 
 class File extends Logger
@@ -20,12 +20,10 @@ class File extends Logger
     {
         parent::__construct($config);
         $this->file_path = isset($config['path']) ? $config['path'] : '/var/log/swoole/';
-
         if( !file_exists($this->file_path) )
         {
             @mkdir($this->file_path, 0755, true);
         }
-
     }
 
     protected function save($path, $content)
@@ -34,23 +32,38 @@ class File extends Logger
         {
             return;
         }
+
         $log_file = $this->file_path . $path . '_' .  date("Y-m-d") . '.log';
-        if( !isset($this->file[$log_file]) )
+
+        if(Globals::isWorker())
         {
-            $last = $this->file_path . $path . '_' .date("Y-m-d",strtotime("-1 day")) . '.log';
-            if(isset($this->file[$last]))
+            if( is_string($content) )
             {
-                fclose($this->file[$last]);
-                unset($this->file[$last]);
+                $str = date("Y-m-d H:i:s") .": " . $content;
+            } else {
+                $str = date('Y-m-d H:i:s') .": " . var_export($content, true);
             }
-            $this->file[$log_file] = fopen($log_file,'a');
+            swoole_async_writefile($log_file,$str, function(){}, FILE_APPEND);
         }
-        if( is_string($content) )
+        else
         {
-            $str = date("Y-m-d H:i:s") .": " . $content;
-        } else {
-            $str = date('Y-m-d H:i:s') .": " . var_export($content, true);
+            if( !isset($this->file[$log_file]) )
+            {
+                $last = $this->file_path . $path . '_' .date("Y-m-d",strtotime("-1 day")) . '.log';
+                if(isset($this->file[$last]))
+                {
+                    fclose($this->file[$last]);
+                    unset($this->file[$last]);
+                }
+                $this->file[$log_file] = fopen($log_file,'a');
+            }
+            if( is_string($content) )
+            {
+                $str = date("Y-m-d H:i:s") .": " . $content;
+            } else {
+                $str = date('Y-m-d H:i:s') .": " . var_export($content, true);
+            }
+            fwrite( $this->file[$log_file], $str . "\r\n");
         }
-        fwrite( $this->file[$log_file], $str . "\r\n");
     }
 }

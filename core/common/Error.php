@@ -28,7 +28,8 @@ class Error
     const ERR_REDIS_ERROR                            = -21;             // Redis请求失败
     const ERR_REDIS_TIMEOUT                          = -22;             // Redis超时
 
-    const ERR_HTTP_TIMEOUT                           = -25;             // Http请求超时
+    const ERR_HTTP_CONN_CLOSE                        = -25;             // Http连接已关闭
+    const ERR_HTTP_TIMEOUT                           = -26;             // Http请求超时
 
     const ERR_TASK_NOT_FOUND                         = -30;             // 异步Task不存在
 
