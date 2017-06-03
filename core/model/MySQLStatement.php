@@ -225,24 +225,22 @@ class MySQLStatement extends DbQuery
 
 	/**
 	 * 添加统计条件
-	 * @param array $params 统计的条件
+	 * @param string $params 统计的条件
 	 * @return MySQLStatement
 	 */
 	public function groupby($params)
 	{
-		//$query = (gettype($params)=="string" ? $params : $this->buildQueryList($params));
 		$this->_sql['groupby'][] = $params;
 		return $this;
 	}
 
 	/**
 	 * 添加统计后返回条件
-	 * @param array $params 统计的条件
+	 * @param string $params 统计的条件
 	 * @return MySQLStatement
 	 */
 	public function having($params)
 	{
-		//$query = (gettype($params)=="string" ? $params : $this->buildQueryList($params));
 		$this->_sql['having'][] = $params;
 		return $this;
 	}
