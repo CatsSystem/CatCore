@@ -27,42 +27,14 @@ use core\server\IServer;
 abstract class WebSocketServer extends IServer
 {
     /**
-     * 服务器接收到Http完整数据包后回调此函数
-     * @param \swoole_http_request $request swoole封装的http请求对象
-     * @param \swoole_http_response $response swoole封装的http应答对象
+     * 服务器接收到TCP完整数据包后回调此函数
+     * @param \swoole_server $server swoole_server对象
+     * @param int $fd 连接描述符
+     * @param int $from_id reactor id
+     * @param string $data 接收到的数据
      */
-    public function onRequest(\swoole_http_request $request, \swoole_http_response $response)
+    public function onReceive($server, $fd, $from_id, $data)
     {
-        // TODO: Implement onRequest() method.
-    }
-
-    /**
-     * 服务器接收到WebSocket完整数据包后回调此函数
-     * @param \swoole_websocket_server $server swoole_websocket_server对象
-     * @param \swoole_websocket_frame $frame swoole封装的ws请求帧
-     */
-    public function onMessage(\swoole_websocket_server $server, \swoole_websocket_frame $frame)
-    {
-        // TODO: Implement onMessage() method.
-    }
-
-    /**
-     * 服务器接收到WebSocket连接时回调此函数
-     * @param \swoole_websocket_server $server swoole_websocket_server对象
-     * @param \swoole_http_request $request swoole封装的http请求对象
-     */
-    public function onOpen(\swoole_websocket_server $server, \swoole_http_request $request)
-    {
-        // TODO: Implement onOpen() method.
-    }
-
-    /**
-     * 服务器进行WebSocket握手操作时回调此函数
-     * @param \swoole_http_request $request swoole封装的http请求对象
-     * @param \swoole_http_response $response swoole封装的http应答对象
-     */
-    public function onHandShake(\swoole_http_request $request, \swoole_http_response $response)
-    {
-        // TODO: Implement onHandShake() method.
+        // TODO: Implement onReceive() method.
     }
 }
