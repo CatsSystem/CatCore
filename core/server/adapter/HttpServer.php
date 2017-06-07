@@ -34,7 +34,7 @@ abstract class HttpServer extends IServer
      * @param int $from_id reactor id
      * @param string $data 接收到的数据
      */
-    public function onReceive($server, $fd, $from_id, $data)
+    public function onReceive(\swoole_server $server, $fd, $from_id, $data)
     {
         // TODO: Implement onReceive() method.
     }

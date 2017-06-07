@@ -42,7 +42,7 @@ abstract class IServer
         $this->pid_path     = $pid_path;
     }
 
-    public function onStart($server)
+    public function onStart(\swoole_server $server)
     {
         Globals::setProcessName($this->project_name . " server running master:" . $server->master_pid);
         if (!empty($this->pid_path)) {
@@ -72,7 +72,7 @@ abstract class IServer
      * @throws \Exception
      * @desc 服务启动，设置进程名
      */
-    public function onManagerStart($server)
+    public function onManagerStart(\swoole_server $server)
     {
         Globals::setProcessName($this->project_name .' server manager:' . $server->manager_pid);
         if (!empty($this->pid_path)) {
@@ -94,7 +94,7 @@ abstract class IServer
      * @param \swoole_server    $server         swoole_server对象
      * @param int               $workerId       Worker进程ID
      */
-    public function doWorkerStart($server, $workerId)
+    public function doWorkerStart(\swoole_server $server, $workerId)
     {
         $workNum = $server->setting['worker_num'];
         if ($workerId >= $workNum) {
@@ -110,7 +110,7 @@ abstract class IServer
      * @param \swoole_server    $server         swoole_server对象
      * @param int               $workerId       Worker进程ID
      **/
-    public function onWorkerStop($server, $workerId)
+    public function onWorkerStop(\swoole_server $server, $workerId)
     {
 
     }
@@ -122,7 +122,7 @@ abstract class IServer
      * @param int               $exit_code      退出的错误码
      * @param int               $signal         进程退出的信号
      */
-    public function onWorkerError($server, $workerId, $worker_pid, $exit_code, $signal)
+    public function onWorkerError(\swoole_server $server, $workerId, $worker_pid, $exit_code, $signal)
     {
 
     }
@@ -130,30 +130,30 @@ abstract class IServer
 
     /**
      * 初始化函数，在swoole_server启动前执行
-     * @param $server
+     * @param \swoole_server $server
      */
-    abstract public function init($server);
+    abstract public function init(\swoole_server $server);
 
     /**
      * Worker进程启动前回调此函数
      * @param \swoole_server    $server         swoole_server对象
      * @param int               $workerId       Worker进程ID
      */
-    abstract public function onWorkerStart($server, $workerId);
+    abstract public function onWorkerStart(\swoole_server $server, $workerId);
 
     /**
      * 服务器接收新连接时调用此函数
      * @param \swoole_server    $server         swoole_server对象
      * @param int               $fd             连接描述符
      */
-    abstract public function onConnect($server, $fd);
+    abstract public function onConnect(\swoole_server $server, $fd);
 
     /**
      * 连接断开时调用此函数
      * @param \swoole_server    $server         swoole_server对象
      * @param int               $fd             连接描述符
      */
-    abstract public function onClose($server, $fd);
+    abstract public function onClose(\swoole_server $server, $fd);
 
     /**
      * 当Worker进程投递任务到Task Worker进程时调用此函数
@@ -162,7 +162,7 @@ abstract class IServer
      * @param int               $src_worker_id  发起任务的Worker进程ID
      * @param mixed             $data           任务数据
      */
-    abstract public function onTask($server, $task_id, $src_worker_id, $data);
+    abstract public function onTask(\swoole_server $server, $task_id, $src_worker_id, $data);
 
 
     /**
@@ -172,7 +172,7 @@ abstract class IServer
      * @param int               $from_id        reactor id
      * @param string            $data           接收到的数据
      */
-    abstract public function onReceive($server, $fd, $from_id, $data);
+    abstract public function onReceive(\swoole_server $server, $fd, $from_id, $data);
 
     /**
      * 服务器接收到Http完整数据包后回调此函数
