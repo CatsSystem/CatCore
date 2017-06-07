@@ -196,13 +196,6 @@ abstract class IServer
     abstract public function onOpen(\swoole_websocket_server $server, \swoole_http_request $request);
 
     /**
-     * 服务器进行WebSocket握手操作时回调此函数
-     * @param \swoole_http_request      $request        swoole封装的http请求对象
-     * @param \swoole_http_response     $response       swoole封装的http应答对象
-     */
-    abstract public function onHandShake(\swoole_http_request $request, \swoole_http_response $response);
-
-    /**
      * Swoole进程间通信的回调函数
      * @param \swoole_server    $server         swoole_server对象
      * @param int               $from_worker_id 来源Worker进程ID

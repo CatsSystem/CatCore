@@ -37,4 +37,14 @@ abstract class WebSocketServer extends IServer
     {
         // TODO: Implement onReceive() method.
     }
+
+    public function onConnect(\swoole_server $server, $fd)
+    {
+
+    }
+
+    public function onClose(\swoole_server $server, $fd)
+    {
+
+    }
 }

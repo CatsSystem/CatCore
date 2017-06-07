@@ -68,4 +68,14 @@ abstract class HttpServer extends IServer
     {
         // TODO: Implement onHandShake() method.
     }
+
+    public function onConnect(\swoole_server $server, $fd)
+    {
+
+    }
+
+    public function onClose(\swoole_server $server, $fd)
+    {
+
+    }
 }

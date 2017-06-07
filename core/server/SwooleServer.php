@@ -98,8 +98,6 @@ class SwooleServer
             case 'http':
             {
                 $this->server->on("Request", [$this->main_server, "onRequest"]);
-                $this->server->on("Connect", [$this->main_server, "onConnect"]);
-                $this->server->on("Close",   [$this->main_server, "onClose"]);
                 break;
             }
             case 'ws':
@@ -107,7 +105,6 @@ class SwooleServer
                 $this->server->on("Request", [$this->main_server, "onRequest"]);
                 $this->server->on("Message", [$this->main_server, "onMessage"]);
                 $this->server->on("Open",    [$this->main_server, "onOpen"]);
-                $this->server->on("HandShake", [$this->main_server, "onHandShake"]);
                 break;
             }
         }
