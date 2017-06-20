@@ -109,7 +109,8 @@ class SwooleServer
             }
         }
 
-        if(isset($this->config['task_worker_num']) && $this->config['task_worker_num'] > 0)
+        if(isset($this->config['setting']['task_worker_num'])
+            && $this->config['setting']['task_worker_num'] > 0)
         {
             $this->server->on("Task", [$this->main_server, "onTask"]);
             $this->server->on("Finish", function(){});
