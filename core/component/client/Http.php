@@ -107,14 +107,12 @@ class Http
     {
         $promise = new Promise();
         $timeId = swoole_timer_after($timeout, function() use ($promise){
-            $this->http_client->close();
             $promise->resolve([
                 'code'  => Error::ERR_HTTP_TIMEOUT
             ]);
         });
         $this->http_client->get($path, function($cli) use($promise,$timeId){
             \swoole_timer_clear($timeId);
-            $this->http_client->close();
             $promise->resolve([
                 'code'      => Error::SUCCESS,
                 'data'      => $cli->body,
@@ -134,7 +132,6 @@ class Http
     {
         $promise = new Promise();
         $timeId = swoole_timer_after($timeout, function() use ($promise){
-            $this->http_client->close();
             $promise->resolve([
                 'code'  => Error::ERR_HTTP_TIMEOUT
             ]);
@@ -142,7 +139,6 @@ class Http
 
         $this->http_client->post($path, $data, function($cli) use($promise,$timeId){
             \swoole_timer_clear($timeId);
-            $this->http_client->close();
             $promise->resolve([
                 'code'      => Error::SUCCESS,
                 'data'      => $cli->body,
@@ -161,7 +157,6 @@ class Http
     {
         $promise = new Promise();
         $timeId = swoole_timer_after($timeout, function() use ($promise){
-            $this->http_client->close();
             $promise->resolve([
                 'code'  => Error::ERR_HTTP_TIMEOUT
             ]);
