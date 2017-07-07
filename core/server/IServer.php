@@ -98,9 +98,9 @@ abstract class IServer
     {
         $workNum = $server->setting['worker_num'];
         if ($workerId >= $workNum) {
-            swoole_set_process_name("Push Server tasker num: ".($server->worker_id - $workNum)." pid " . $server->worker_pid);
+            swoole_set_process_name($this->project_name .' server tasker num: '. ($server->worker_id - $workNum). ' pid ' . $server->worker_pid);
         } else {
-            swoole_set_process_name("Push Server worker  num: {$server->worker_id} pid " . $server->worker_pid);
+            swoole_set_process_name($this->project_name .' server worker num: ' . $server->worker_id . ' pid ' . $server->worker_pid);
         }
         $this->onWorkerStart($server, $workerId);
     }
